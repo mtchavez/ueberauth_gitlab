@@ -51,6 +51,7 @@ defmodule UeberauthGitlab.Mixfile do
 
   defp package do
     [
+      name: "ueberauth_gitlab_strategy",
       files: ["lib", "mix.exs", "README*", "LICENSE*"],
       maintainers: ["Chavez"],
       licenses: ["MIT"],
