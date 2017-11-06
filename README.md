@@ -6,11 +6,11 @@
 
 1. Setup your application in Gitlab under your profile [applications menu][gitlab-apps]
 
-1. Add `:ueberauth_gitlab` to your list of dependencies in `mix.exs`:
+1. Add `:ueberauth_gitlab_strategy` to your list of dependencies in `mix.exs`:
 
     ```elixir
     def deps do
-      [{:ueberauth_gitlab, "~> 0.1"}]
+      [{:ueberauth_gitlab_strategy, "~> 0.1"}]
     end
     ```
 
@@ -105,4 +105,4 @@ The docs can be found at [ueberauth_gitlab][package-docs] on [Hex Docs][hex-docs
 [example-app]: https://github.com/ueberauth/ueberauth_example
 [gitlab-apps]: https://gitlab.com/profile/applications
 [hex-docs]: https://hexdocs.pm
-[package-docs]: https://hexdocs.pm/ueberauth_gitlab
+[package-docs]: https://hexdocs.pm/ueberauth_gitlab_strategy
