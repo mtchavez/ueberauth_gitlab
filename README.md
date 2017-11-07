@@ -1,5 +1,8 @@
 # Überauth Gitlab
 
+[![Latest Version](http://img.shields.io/github/release/mtchavez/ueberauth_gitlab.svg?style=flat-square)](https://github.com/mtchavez/ueberauth_gitlab/releases)
+[![Build Status](https://travis-ci.org/mtchavez/ueberauth_gitlab.svg?branch=master)](https://travis-ci.org/mtchavez/ueberauth_gitlab)
+
 > Gitlab OAuth2 strategy for Überauth.
 
 ## Installation
