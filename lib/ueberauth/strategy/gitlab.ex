@@ -87,7 +87,7 @@ defmodule Ueberauth.Strategy.Gitlab do
   """
   def handle_request!(conn) do
     scopes = conn.params["scope"] || option(conn, :default_scope)
-    send_redirect_uri = Keyword.get(options(conn), :send_redirect_uri, true)
+    send_redirect_uri = Keyword.get(options(conn) || [], :send_redirect_uri, true)
 
     opts =
       if send_redirect_uri do
@@ -204,6 +204,6 @@ defmodule Ueberauth.Strategy.Gitlab do
   end
 
   defp option(conn, key) do
-    Keyword.get(options(conn), key, Keyword.get(default_options(), key))
+    Keyword.get(options(conn) || [], key, Keyword.get(default_options(), key))
   end
 end
