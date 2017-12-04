@@ -1,5 +1,6 @@
 # Überauth Gitlab
 
+[![Hex Version](https://img.shields.io/hexpm/v/ueberauth_gitlab_strategy.svg)](https://hex.pm/packages/ueberauth_gitlab_strategy)
 [![Latest Version](http://img.shields.io/github/release/mtchavez/ueberauth_gitlab.svg?style=flat-square)](https://github.com/mtchavez/ueberauth_gitlab/releases)
 [![Build Status](https://travis-ci.org/mtchavez/ueberauth_gitlab.svg?branch=master)](https://travis-ci.org/mtchavez/ueberauth_gitlab)
 
