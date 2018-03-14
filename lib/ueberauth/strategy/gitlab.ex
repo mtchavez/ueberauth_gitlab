@@ -2,7 +2,7 @@ defmodule Ueberauth.Strategy.Gitlab do
   @moduledoc """
   Provides an Ueberauth strategy for authenticating with Gitlab.
 
-### Setup
+  ### Setup
 
   Create an application in Gitlab for you to use.
 
@@ -68,9 +68,10 @@ defmodule Ueberauth.Strategy.Gitlab do
 
   Default is "api read_user read_registry"
   """
-  use Ueberauth.Strategy, uid_field: :id,
-                          default_scope: "api read_user read_registry",
-                          oauth2_module: Ueberauth.Strategy.Gitlab.OAuth
+  use Ueberauth.Strategy,
+    uid_field: :id,
+    default_scope: "api read_user read_registry",
+    oauth2_module: Ueberauth.Strategy.Gitlab.OAuth
 
   alias Ueberauth.Auth.Info
   alias Ueberauth.Auth.Credentials
@@ -112,7 +113,9 @@ defmodule Ueberauth.Strategy.Gitlab do
     token = apply(module, :get_token!, [[code: code]])
 
     if token.access_token == nil do
-      set_errors!(conn, [error(token.other_params["error"], token.other_params["error_description"])])
+      set_errors!(conn, [
+        error(token.other_params["error"], token.other_params["error_description"])
+      ])
     else
       fetch_user(conn, token)
     end
@@ -139,6 +142,7 @@ defmodule Ueberauth.Strategy.Gitlab do
       conn
       |> option(:uid_field)
       |> to_string
+
     conn.private.gitlab_user[user]
   end
 
@@ -146,9 +150,9 @@ defmodule Ueberauth.Strategy.Gitlab do
   Includes the credentials from the Gitlab response.
   """
   def credentials(conn) do
-    token        = conn.private.gitlab_token
-    scope_string = (token.other_params["scope"] || "")
-    scopes       = String.split(scope_string, ",")
+    token = conn.private.gitlab_token
+    scope_string = token.other_params["scope"] || ""
+    scopes = String.split(scope_string, ",")
 
     %Credentials{
       token: token.access_token,
@@ -165,6 +169,7 @@ defmodule Ueberauth.Strategy.Gitlab do
   """
   def info(conn) do
     user = conn.private.gitlab_user
+
     %Info{
       name: user["name"],
       nickname: user["username"],
@@ -173,7 +178,7 @@ defmodule Ueberauth.Strategy.Gitlab do
       image: user["avatar_url"],
       urls: %{
         web_url: user["web_url"],
-        website_url: user["website_url"],
+        website_url: user["website_url"]
       }
     }
   end
@@ -182,7 +187,7 @@ defmodule Ueberauth.Strategy.Gitlab do
   Stores the raw information (including the token) obtained from the Gitlab callback.
   """
   def extra(conn) do
-    %Extra {
+    %Extra{
       raw_info: %{
         token: conn.private.gitlab_token,
         user: conn.private.gitlab_user
@@ -193,11 +198,15 @@ defmodule Ueberauth.Strategy.Gitlab do
   defp fetch_user(conn, token) do
     conn = put_private(conn, :gitlab_token, token)
     api_ver = option(conn, :api_ver) || "v4"
+
     case Ueberauth.Strategy.Gitlab.OAuth.get(token, "/api/#{api_ver}/user") do
       {:ok, %OAuth2.Response{status_code: 401, body: _body}} ->
         set_errors!(conn, [error("token", "unauthorized")])
-      {:ok, %OAuth2.Response{status_code: status_code, body: user}} when status_code in 200..399 ->
+
+      {:ok, %OAuth2.Response{status_code: status_code, body: user}}
+      when status_code in 200..399 ->
         put_private(conn, :gitlab_user, user)
+
       {:error, %OAuth2.Error{reason: reason}} ->
         set_errors!(conn, [error("OAuth2", reason)])
     end
