@@ -9,8 +9,8 @@ defmodule UeberauthGitlab.Mixfile do
       version: @version,
       package: package(),
       elixir: "~> 1.3",
-      build_embedded: Mix.env == :prod,
-      start_permanent: Mix.env == :prod,
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
       source_url: "https://github.com/mtchavez/ueberauth_gitlab",
       homepage_url: "https://github.com/mtchavez/ueberauth_gitlab",
       description: description(),
@@ -34,7 +34,7 @@ defmodule UeberauthGitlab.Mixfile do
 
       # dev/test only dependencies
       {:credo, "~> 0.8", only: [:dev, :test]},
-      {:exvcr, "~> 0.9.0", only: [:test]},
+      {:exvcr, "~> 0.10.0", only: [:test]},
 
       # docs dependencies
       {:earmark, ">= 0.0.0", only: :dev},
@@ -56,7 +56,7 @@ defmodule UeberauthGitlab.Mixfile do
       files: ["lib", "mix.exs", "README*", "LICENSE*"],
       maintainers: ["Chavez"],
       licenses: ["MIT"],
-      links: %{"GitHub": "https://github.com/mtchavez/ueberauth_gitlab"}
+      links: %{GitHub: "https://github.com/mtchavez/ueberauth_gitlab"}
     ]
   end
 end
