@@ -21,7 +21,7 @@
 
     ```elixir
     def application do
-      [applications: [:ueberauth_gitlab]]
+      [applications: [:ueberauth_gitlab_strategy]]
     end
     ```
 
