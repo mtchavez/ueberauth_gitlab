@@ -1,11 +1,11 @@
 defmodule UeberauthGitlab.Mixfile do
   use Mix.Project
 
-  @version "0.1.1"
+  @version "0.2.0"
 
   def project do
     [
-      app: :ueberauth_gitlab,
+      app: :ueberauth_gitlab_strategy,
       version: @version,
       package: package(),
       elixir: "~> 1.3",

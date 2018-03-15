@@ -13,7 +13,7 @@
 
     ```elixir
     def deps do
-      [{:ueberauth_gitlab_strategy, "~> 0.1"}]
+      [{:ueberauth_gitlab_strategy, "~> 0.2"}]
     end
     ```
 
@@ -30,7 +30,7 @@
     ```elixir
     config :ueberauth, Ueberauth,
       providers: [
-        gitlab: {Ueberauth.Strategy.Gitlab, []}
+        gitlab: {Ueberauth.Strategy.Gitlab, [default_scope: "read_user"]}
       ]
     ```
 
@@ -39,7 +39,8 @@
     ```elixir
     config :ueberauth, Ueberauth.Strategy.Gitlab.OAuth,
       client_id: System.get_env("GITLAB_CLIENT_ID"),
-      client_secret: System.get_env("GITLAB_CLIENT_SECRET")
+      client_secret: System.get_env("GITLAB_CLIENT_SECRET"),
+      redirect_uri: System.get_env("GITLAB_REDIRECT_URI")
     ```
 
 1.  Include the Überauth plug in your controller:
@@ -97,7 +98,8 @@ It is also possible to disable the sending of the `redirect_uri` to Gitlab. This
 is particularly useful when your production application sits behind a proxy that
 handles SSL connections. In this case, the `redirect_uri` sent by `Ueberauth`
 will start with `http` instead of `https`, and if you configured your Gitlb OAuth
-application's callback URL to use HTTPS, Gitlab will throw an `uri_missmatch` error. In addition if the `redirect_uri` on the the authorize request **must match**
+application's callback URL to use HTTPS, Gitlab will throw an `uri_missmatch` error.
+In addition if the `redirect_uri` on the the authorize request **must match**
 the `redirect_uri` on the token request.
 
 
