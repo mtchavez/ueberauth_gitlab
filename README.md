@@ -30,7 +30,12 @@
     ```elixir
     config :ueberauth, Ueberauth,
       providers: [
-        gitlab: {Ueberauth.Strategy.Gitlab, [default_scope: "read_user"]}
+        identity: { Ueberauth.Strategy.Identity, [
+            callback_methods: ["POST"],
+            uid_field: :email,
+            nickname_field: :username,
+          ] },
+        gitlab: {Ueberauth.Strategy.Gitlab, [default_scope: "read_user"]},
       ]
     ```
 
@@ -86,11 +91,12 @@ Or with options:
 ```elixir
 config :ueberauth, Ueberauth,
   providers: [
-    gitlab: {
-      Ueberauth.Strategy.Gitlab, [
-        default_scope: "api read_user read_registry"
-      ]
-    }
+    identity: { Ueberauth.Strategy.Identity, [
+        callback_methods: ["POST"],
+        uid_field: :email,
+        nickname_field: :username,
+      ] },
+    gitlab: {Ueberauth.Strategy.Gitlab, [default_scope: "read_user"]},
   ]
 ```
 
