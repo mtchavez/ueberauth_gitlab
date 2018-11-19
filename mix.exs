@@ -33,7 +33,7 @@ defmodule UeberauthGitlab.Mixfile do
       {:ueberauth, "~> 0.4"},
 
       # dev/test only dependencies
-      {:credo, "~> 0.8", only: [:dev, :test]},
+      {:credo, "~> 1.0", only: [:dev, :test]},
       {:exvcr, "~> 0.10.0", only: [:test]},
 
       # docs dependencies
