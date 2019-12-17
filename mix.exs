@@ -34,7 +34,7 @@ defmodule UeberauthGitlab.Mixfile do
 
       # dev/test only dependencies
       {:credo, "~> 1.0", only: [:dev, :test]},
-      {:exvcr, "~> 0.10.0", only: [:test]},
+      {:exvcr, "~> 0.11.0", only: [:test]},
 
       # docs dependencies
       {:earmark, ">= 0.0.0", only: :dev},
