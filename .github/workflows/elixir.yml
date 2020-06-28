@@ -1,0 +1,29 @@
+name: Elixir CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        otp: ["21.x", "22.x", "23.x"]
+        elixir: ["1.8.x", "1.9.x", "1.10.x"]
+        exclude:
+          - otp: "23.x"
+            elixir: "1.8.x"
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup elixir
+        uses: actions/setup-elixir@v1
+        with:
+          elixir-version: ${{matrix.elixir}}
+          otp-version: ${{matrix.otp}}
+      - name: Install Dependencies
+        run: mix deps.get
+      - name: Run Tests
+        run: mix test
