@@ -40,9 +40,11 @@ defmodule UeberauthGitlabTest do
       conn =
         %Plug.Conn{}
         |> Plug.Conn.put_private(:gitlab_user, %{username: "mtchavez"})
+        |> Plug.Conn.put_private(:gitlab_token, "sometoken")
 
       result = Gitlab.handle_cleanup!(conn)
       assert result.private.gitlab_user == nil
+      assert result.private.gitlab_token == nil
     end
   end
 

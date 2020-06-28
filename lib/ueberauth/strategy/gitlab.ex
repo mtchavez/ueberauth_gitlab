@@ -132,6 +132,7 @@ defmodule Ueberauth.Strategy.Gitlab do
   def handle_cleanup!(conn) do
     conn
     |> put_private(:gitlab_user, nil)
+    |> put_private(:gitlab_token, nil)
   end
 
   @doc """
