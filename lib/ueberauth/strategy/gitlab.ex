@@ -68,14 +68,14 @@ defmodule Ueberauth.Strategy.Gitlab do
 
   Default is "api read_user read_registry"
   """
+
+  alias Ueberauth.Auth.{Credentials, Extra, Info}
+  alias Ueberauth.Strategy.Gitlab.OAuth
+
   use Ueberauth.Strategy,
     uid_field: :id,
     default_scope: "api read_user read_registry",
-    oauth2_module: Ueberauth.Strategy.Gitlab.OAuth
-
-  alias Ueberauth.Auth.Info
-  alias Ueberauth.Auth.Credentials
-  alias Ueberauth.Auth.Extra
+    oauth2_module: OAuth
 
   @doc """
   Handles the initial redirect to the gitlab authentication page.
@@ -199,7 +199,7 @@ defmodule Ueberauth.Strategy.Gitlab do
     conn = put_private(conn, :gitlab_token, token)
     api_ver = option(conn, :api_ver) || "v4"
 
-    case Ueberauth.Strategy.Gitlab.OAuth.get(token, "/api/#{api_ver}/user") do
+    case OAuth.get(token, "/api/#{api_ver}/user") do
       {:ok, %OAuth2.Response{status_code: 401, body: _body}} ->
         set_errors!(conn, [error("token", "unauthorized")])
 

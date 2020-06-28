@@ -1,14 +1,14 @@
 defmodule UeberauthGitlab.Mixfile do
   use Mix.Project
 
-  @version "0.2.0"
+  @version "0.3.0"
 
   def project do
     [
       app: :ueberauth_gitlab_strategy,
       version: @version,
       package: package(),
-      elixir: "~> 1.3",
+      elixir: "~> 1.8",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       source_url: "https://github.com/mtchavez/ueberauth_gitlab",
@@ -29,7 +29,7 @@ defmodule UeberauthGitlab.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:oauth2, "~> 0.9"},
+      {:oauth2, "~> 2.0"},
       {:ueberauth, "~> 0.4"},
 
       # dev/test only dependencies
