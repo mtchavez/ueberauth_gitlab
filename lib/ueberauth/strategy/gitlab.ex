@@ -210,6 +210,12 @@ defmodule Ueberauth.Strategy.Gitlab do
 
       {:error, %OAuth2.Error{reason: reason}} ->
         set_errors!(conn, [error("OAuth2", reason)])
+
+      {:error, %OAuth2.Response{body: %{"message" => reason}}} ->
+        set_errors!(conn, [error("OAuth2", reason)])
+
+      {:error, _} ->
+        set_errors!(conn, [error("OAuth2", "uknown error")])
     end
   end
 
