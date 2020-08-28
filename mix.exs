@@ -38,7 +38,7 @@ defmodule UeberauthGitlab.Mixfile do
 
       # docs dependencies
       {:earmark, ">= 1.4.0", only: :dev},
-      {:ex_doc, ">= 0.0.0", only: :dev}
+      {:ex_doc, ">= 0.22.0", only: :dev}
     ]
   end
 
