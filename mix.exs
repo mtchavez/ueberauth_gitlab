@@ -37,7 +37,7 @@ defmodule UeberauthGitlab.Mixfile do
       {:exvcr, "~> 0.11.0", only: [:test]},
 
       # docs dependencies
-      {:earmark, ">= 0.0.0", only: :dev},
+      {:earmark, ">= 1.4.0", only: :dev},
       {:ex_doc, ">= 0.0.0", only: :dev}
     ]
   end
