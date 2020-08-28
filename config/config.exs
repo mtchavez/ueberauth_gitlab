@@ -30,18 +30,6 @@ use Mix.Config
 #     import_config "#{Mix.env}.exs"
 
 if Mix.env() == :test do
-  config :exvcr,
-    vcr_cassette_library_dir: "fixture/vcr_cassettes",
-    custom_cassette_library_dir: "fixture/custom_cassettes",
-    filter_sensitive_data: [
-      [pattern: "<PASSWORD>.+</PASSWORD>", placeholder: "PASSWORD_PLACEHOLDER"]
-    ],
-    filter_url_params: [
-      [pattern: "client_secret=.*\&?", placeholder: "CLIENT_SECRET"]
-    ],
-    filter_request_headers: [],
-    response_headers_blacklist: []
-
   config :ueberauth, Ueberauth,
     providers: [
       gitlab:
@@ -50,6 +38,6 @@ if Mix.env() == :test do
     ]
 
   config :ueberauth, Ueberauth.Strategy.Gitlab.OAuth,
-    client_id: System.get_env("GITLAB_CLIENT_ID"),
-    client_secret: System.get_env("GITLAB_CLIENT_SECRET")
+    client_id: System.get_env("GITLAB_CLIENT_ID") || "test_client_id",
+    client_secret: System.get_env("GITLAB_CLIENT_SECRET") || "test_client_secret"
 end
