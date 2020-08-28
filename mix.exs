@@ -8,7 +8,7 @@ defmodule UeberauthGitlab.Mixfile do
       app: :ueberauth_gitlab_strategy,
       version: @version,
       package: package(),
-      elixir: "~> 1.3",
+      elixir: "~> 1.7",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       source_url: "https://github.com/mtchavez/ueberauth_gitlab",
@@ -37,8 +37,8 @@ defmodule UeberauthGitlab.Mixfile do
       {:exvcr, "~> 0.11.0", only: [:test]},
 
       # docs dependencies
-      {:earmark, ">= 0.0.0", only: :dev},
-      {:ex_doc, ">= 0.0.0", only: :dev}
+      {:earmark, ">= 1.4.0", only: :dev},
+      {:ex_doc, ">= 0.22.0", only: :dev}
     ]
   end
 

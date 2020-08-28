@@ -16,7 +16,7 @@ defmodule Ueberauth.Strategy.Gitlab.OAuth do
     authorize_url: "https://gitlab.com/oauth/authorize",
     token_url: "https://gitlab.com/oauth/token",
     api_version: "v4",
-    token_method: :post,
+    token_method: :post
   ]
 
   @doc """
@@ -31,15 +31,16 @@ defmodule Ueberauth.Strategy.Gitlab.OAuth do
   """
   def client(opts \\ []) do
     config =
-    :ueberauth
-    |> Application.fetch_env!(Ueberauth.Strategy.Gitlab.OAuth)
-    |> check_config_key_exists(:client_id)
-    |> check_config_key_exists(:client_secret)
+      :ueberauth
+      |> Application.fetch_env!(Ueberauth.Strategy.Gitlab.OAuth)
+      |> check_config_key_exists(:client_id)
+      |> check_config_key_exists(:client_secret)
 
     client_opts =
       @defaults
       |> Keyword.merge(config)
       |> Keyword.merge(opts)
+
     OAuth2.Client.new(client_opts)
   end
 
@@ -60,10 +61,10 @@ defmodule Ueberauth.Strategy.Gitlab.OAuth do
   end
 
   def get_token!(params \\ [], options \\ []) do
-    headers        = Keyword.get(options, :headers, [])
-    options        = Keyword.get(options, :options, [])
+    headers = Keyword.get(options, :headers, [])
+    options = Keyword.get(options, :options, [])
     client_options = Keyword.get(options, :client_options, [])
-    client         = OAuth2.Client.get_token!(client(client_options), params, headers, options)
+    client = OAuth2.Client.get_token!(client(client_options), params, headers, options)
     client.token
   end
 
@@ -73,6 +74,7 @@ defmodule Ueberauth.Strategy.Gitlab.OAuth do
     client
     |> put_param("response_type", "code")
     |> put_param("redirect_uri", client().redirect_uri)
+
     OAuth2.Strategy.AuthCode.authorize_url(client, params)
   end
 
@@ -88,10 +90,12 @@ defmodule Ueberauth.Strategy.Gitlab.OAuth do
 
   defp check_config_key_exists(config, key) when is_list(config) do
     unless Keyword.has_key?(config, key) do
-      raise "#{inspect (key)} missing from config :ueberauth, Ueberauth.Strategy.Gitlab"
+      raise "#{inspect(key)} missing from config :ueberauth, Ueberauth.Strategy.Gitlab"
     end
+
     config
   end
+
   defp check_config_key_exists(_, _) do
     raise "Config :ueberauth, Ueberauth.Strategy.Gitlab is not a keyword list, as expected"
   end
