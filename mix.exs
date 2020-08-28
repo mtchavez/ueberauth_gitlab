@@ -8,7 +8,7 @@ defmodule UeberauthGitlab.Mixfile do
       app: :ueberauth_gitlab_strategy,
       version: @version,
       package: package(),
-      elixir: "~> 1.3",
+      elixir: "~> 1.7",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       source_url: "https://github.com/mtchavez/ueberauth_gitlab",
