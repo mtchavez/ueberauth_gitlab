@@ -1,23 +1,48 @@
 defmodule UeberauthGitlabTest do
   use ExUnit.Case, async: false
-  use ExVCR.Mock, adapter: ExVCR.Adapter.Hackney
+  use Plug.Test
+
+  import Plug.Conn
 
   doctest UeberauthGitlab
 
-  @tag :skip
-  test "handle_request!" do
-    use_cassette "handle_request!" do
-      conn = %Plug.Conn{
-        params: %{
-          client_id: "12345",
-          client_secret: "98765",
-          redirect_uri: "http://localhost:4000/auth/gitlab/callback"
-        }
-      }
+  def set_options(routes, conn, opt) do
+    case Enum.find_index(routes, &(elem(&1, 0) == {conn.request_path, conn.method})) do
+      nil ->
+        routes
 
-      result = Ueberauth.Strategy.Gitlab.handle_request!(conn)
-      assert result == nil
+      idx ->
+        update_in(routes, [Access.at(idx), Access.elem(1), Access.elem(2)], &%{&1 | options: opt})
     end
+  end
+
+  test "handle_request!" do
+    conn =
+      conn(:get, "/auth/gitlab", %{
+        client_id: "12345",
+        client_secret: "98765",
+        redirect_uri: "http://localhost:4000/auth/gitlab/callback"
+      })
+
+    routes =
+      Ueberauth.init()
+      |> set_options(conn, default_scope: "read_user")
+
+    resp = Ueberauth.call(conn, routes)
+
+    assert resp.status == 302
+    assert [location] = get_resp_header(resp, "location")
+
+    redirect_uri = URI.parse(location)
+    assert redirect_uri.host == "gitlab.com"
+    assert redirect_uri.path == "/oauth/authorize"
+
+    assert %{
+             "client_id" => "test_client_id",
+             "redirect_uri" => "http://www.example.com/auth/gitlab/callback",
+             "response_type" => "code",
+             "scope" => "read_user"
+           } = Plug.Conn.Query.decode(redirect_uri.query)
   end
 
   describe "handle_callback!" do
@@ -38,9 +63,11 @@ defmodule UeberauthGitlabTest do
       conn =
         %Plug.Conn{}
         |> Plug.Conn.put_private(:gitlab_user, %{username: "mtchavez"})
+        |> Plug.Conn.put_private(:gitlab_token, "test-token")
 
       result = Ueberauth.Strategy.Gitlab.handle_cleanup!(conn)
       assert result.private.gitlab_user == nil
+      assert result.private.gitlab_token == nil
     end
   end
 

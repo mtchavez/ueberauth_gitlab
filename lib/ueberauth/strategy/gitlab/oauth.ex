@@ -41,7 +41,10 @@ defmodule Ueberauth.Strategy.Gitlab.OAuth do
       |> Keyword.merge(config)
       |> Keyword.merge(opts)
 
+    json_library = Ueberauth.json_library()
+
     OAuth2.Client.new(client_opts)
+    |> OAuth2.Client.put_serializer("application/json", json_library)
   end
 
   @doc """
