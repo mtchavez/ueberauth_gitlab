@@ -11,6 +11,8 @@ defmodule UeberauthGitlab.Mixfile do
       elixir: "~> 1.7",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [coveralls: :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test],
       source_url: "https://github.com/mtchavez/ueberauth_gitlab",
       homepage_url: "https://github.com/mtchavez/ueberauth_gitlab",
       description: description(),
@@ -34,6 +36,7 @@ defmodule UeberauthGitlab.Mixfile do
 
       # dev/test only dependencies
       {:credo, "~> 1.0", only: [:dev, :test]},
+      {:excoveralls, "~> 0.13", only: :test},
 
       # docs dependencies
       {:earmark, ">= 1.4.0", only: :dev},

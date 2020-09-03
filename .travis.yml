@@ -3,7 +3,11 @@ language: elixir
 elixir:
   - "1.7"
 otp_release: "22.0"
-
+env:
+  - MIX_ENV=test
+cache:
+  directories:
+  - _build
 matrix:
   include:
     - elixir: "1.8"
@@ -12,3 +16,4 @@ matrix:
       otp_release: "22.0"
     - elixir: "1.10"
       otp_release: "22.0"
+script: mix coveralls.travis
