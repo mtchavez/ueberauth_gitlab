@@ -2,6 +2,7 @@
 
 [![Hex Version](https://img.shields.io/hexpm/v/ueberauth_gitlab_strategy.svg)](https://hex.pm/packages/ueberauth_gitlab_strategy)
 [![Build Status](https://travis-ci.org/mtchavez/ueberauth_gitlab.svg?branch=master)](https://travis-ci.org/mtchavez/ueberauth_gitlab)
+[![Coverage Status](https://coveralls.io/repos/github/mtchavez/ueberauth_gitlab/badge.svg?branch=master)](https://coveralls.io/github/mtchavez/ueberauth_gitlab?branch=master)
 
 > Gitlab OAuth2 strategy for Überauth.
 
