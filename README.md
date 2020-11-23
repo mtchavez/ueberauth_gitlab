@@ -1,46 +1,50 @@
 # Überauth Gitlab
 
-[![Hex Version](https://img.shields.io/hexpm/v/ueberauth_gitlab_strategy.svg)](https://hex.pm/packages/ueberauth_gitlab_strategy)
 [![Build Status](https://travis-ci.org/mtchavez/ueberauth_gitlab.svg?branch=master)](https://travis-ci.org/mtchavez/ueberauth_gitlab)
 [![Coverage Status](https://coveralls.io/repos/github/mtchavez/ueberauth_gitlab/badge.svg?branch=master)](https://coveralls.io/github/mtchavez/ueberauth_gitlab?branch=master)
+[![Module Version](https://img.shields.io/hexpm/v/ueberauth_gitlab_strategy.svg)](https://hex.pm/packages/ueberauth_gitlab_strategy)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/ueberauth_gitlab_strategy/)
+[![Total Download](https://img.shields.io/hexpm/dt/ueberauth_gitlab_strategy.svg)](https://hex.pm/packages/ueberauth_gitlab_strategy)
+[![License](https://img.shields.io/hexpm/l/ueberauth_gitlab_strategy.svg)](https://github.com/mtchavez/ueberauth_gitlab_strategy/blob/master/LICENSE.md)
+[![Last Updated](https://img.shields.io/github/last-commit/mtchavez/ueberauth_gitlab.svg)](https://github.com/mtchavez/ueberauth_gitlab/commits/master)
 
 > Gitlab OAuth2 strategy for Überauth.
 
 ## Installation
 
-1. Setup your application in Gitlab under your profile [applications menu][gitlab-apps]
+1. Setup your application in Gitlab under your profile [applications menu][gitlab-apps].
 
-1. Add `:ueberauth_gitlab_strategy` to your list of dependencies in `mix.exs`:
+2. Add `:ueberauth_gitlab_strategy` to your list of dependencies in `mix.exs`:
 
-    ```elixir
-    def deps do
-      [{:ueberauth_gitlab_strategy, "~> 0.2"}]
-    end
-    ```
+   ```elixir
+   def deps do
+     [{:ueberauth_gitlab_strategy, "~> 0.2"}]
+   end
+   ```
 
-1. Add the strategy to your applications:
+3. Add the strategy to your applications:
 
-    ```elixir
-    def application do
-      [applications: [:ueberauth_gitlab_strategy]]
-    end
-    ```
+   ```elixir
+   def application do
+     [applications: [:ueberauth_gitlab_strategy]]
+   end
+   ```
 
-1. Add Gitlab to your Überauth configuration:
+4. Add Gitlab to your Überauth configuration:
 
-    ```elixir
-    config :ueberauth, Ueberauth,
-      providers: [
-        identity: { Ueberauth.Strategy.Identity, [
-            callback_methods: ["POST"],
-            uid_field: :email,
-            nickname_field: :username,
-          ] },
-        gitlab: {Ueberauth.Strategy.Gitlab, [default_scope: "read_user"]},
-      ]
-    ```
+   ```elixir
+   config :ueberauth, Ueberauth,
+     providers: [
+       identity: { Ueberauth.Strategy.Identity, [
+           callback_methods: ["POST"],
+           uid_field: :email,
+           nickname_field: :username,
+         ] },
+       gitlab: {Ueberauth.Strategy.Gitlab, [default_scope: "read_user"]},
+     ]
+   ```
 
-1.  Update your provider configuration:
+5.  Update your provider configuration:
 
     ```elixir
     config :ueberauth, Ueberauth.Strategy.Gitlab.OAuth,
@@ -49,7 +53,7 @@
       redirect_uri: System.get_env("GITLAB_REDIRECT_URI")
     ```
 
-1.  Include the Überauth plug in your controller:
+6.  Include the Überauth plug in your controller:
 
     ```elixir
     defmodule MyApp.AuthController do
@@ -62,7 +66,7 @@
     end
     ```
 
-1.  Create the request and callback routes if you haven't already:
+7.  Create the request and callback routes if you haven't already:
 
     ```elixir
     scope "/auth", MyApp do
@@ -73,7 +77,7 @@
     end
     ```
 
-1. You controller needs to implement callbacks to deal with `Ueberauth.Auth` and `Ueberauth.Failure` responses.
+8. You controller needs to implement callbacks to deal with `Ueberauth.Auth` and `Ueberauth.Failure` responses.
 
 For an example implementation see the [Überauth Example][example-app] application
 on how to integrate other strategies. Adding Gitlab should be similar to Github.
@@ -109,12 +113,9 @@ application's callback URL to use HTTPS, Gitlab will throw an `uri_missmatch` er
 In addition if the `redirect_uri` on the the authorize request **must match**
 the `redirect_uri` on the token request.
 
+## License
 
-## Documentation
-
-The docs can be found at [ueberauth_gitlab][package-docs] on [Hex Docs][hex-docs].
+The source code is under MIT license. Copyright © 2017-present mtchavez
 
 [example-app]: https://github.com/ueberauth/ueberauth_example
 [gitlab-apps]: https://gitlab.com/profile/applications
-[hex-docs]: https://hexdocs.pm
-[package-docs]: https://hexdocs.pm/ueberauth_gitlab_strategy
