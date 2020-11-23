@@ -63,11 +63,15 @@ defmodule Ueberauth.Strategy.Gitlab do
 
       config :ueberauth, Ueberauth,
         providers: [
-          gitlab: { Ueberauth.Strategy.Gitlab, [default_scope: "api read_user read_registry", api_version: "v4"] }
+          gitlab:
+            {Ueberauth.Strategy.Gitlab,
+             [default_scope: "api read_user read_registry", api_version: "v4"]}
         ]
 
-  Default is "api read_user read_registry"
+  Default is `api read_user read_registry`.
+
   """
+
   use Ueberauth.Strategy,
     uid_field: :id,
     default_scope: "api read_user read_registry",

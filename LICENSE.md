@@ -1,5 +1,5 @@
 Gitlab Üeberauth OAuth strategy to authenticate users with Gitlab.
-Copyright © 2017 mtchavez
+Copyright © 2017-present mtchavez
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the "Software"),
