@@ -2,6 +2,7 @@ defmodule UeberauthGitlab.Mixfile do
   use Mix.Project
 
   @version "0.3.0"
+  @source_url "https://github.com/mtchavez/ueberauth_gitlab"
 
   def project do
     [
@@ -12,9 +13,14 @@ defmodule UeberauthGitlab.Mixfile do
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: [coveralls: :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test],
-      source_url: "https://github.com/mtchavez/ueberauth_gitlab",
-      homepage_url: "https://github.com/mtchavez/ueberauth_gitlab",
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ],
+      source_url: @source_url,
+      homepage_url: @source_url,
       description: description(),
       deps: deps(),
       docs: docs()
