@@ -51,7 +51,10 @@ defmodule UeberauthGitlab.Mixfile do
   end
 
   defp docs do
-    [extras: ["README.md"]]
+    [
+      main: "readme",
+      extras: ["README.md", "CHANGELOG.md"]
+    ]
   end
 
   defp description do
@@ -61,10 +64,13 @@ defmodule UeberauthGitlab.Mixfile do
   defp package do
     [
       name: "ueberauth_gitlab_strategy",
-      files: ["lib", "mix.exs", "README*", "LICENSE*"],
+      files: ["lib", "mix.exs", "README*", "LICENSE*", "CHANGELOG.*"],
       maintainers: ["Chavez"],
       licenses: ["MIT"],
-      links: %{GitHub: "https://github.com/mtchavez/ueberauth_gitlab"}
+      links: %{
+        Changelog: "#{@source_url}/blob/master/CHANGELOG.md",
+        GitHub: @source_url
+      }
     ]
   end
 end
