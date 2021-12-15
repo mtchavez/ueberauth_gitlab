@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.3.1 - 2021-12-15
+
+- Remove dev/test packages from runtime
+- Doc files update
+
 ## v0.3.0 - 2020-08-29
 
 - Upgrade dependencies
