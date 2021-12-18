@@ -71,6 +71,7 @@ defmodule Ueberauth.Strategy.Gitlab do
   use Ueberauth.Strategy,
     uid_field: :id,
     default_scope: "api read_user read_registry",
+    send_redirect_uri: true,
     oauth2_module: Ueberauth.Strategy.Gitlab.OAuth
 
   alias Ueberauth.Auth.Info
@@ -83,22 +84,13 @@ defmodule Ueberauth.Strategy.Gitlab do
   To customize the scope (permissions) that are requested by gitlab include them as part of your url:
 
       "/auth/gitlab?scope=api read_user read_registry"
-
-  You can also include a `state` param that gitlab will return to you.
   """
   def handle_request!(conn) do
-    scopes = conn.params["scope"] || option(conn, :default_scope)
-    send_redirect_uri = Keyword.get(options(conn) || [], :send_redirect_uri, true)
-
     opts =
-      if send_redirect_uri do
-        [redirect_uri: callback_url(conn), scope: scopes]
-      else
-        [scope: scopes]
-      end
-
-    opts =
-      if conn.params["state"], do: Keyword.put(opts, :state, conn.params["state"]), else: opts
+      []
+      |> with_scopes(conn)
+      |> with_state_param(conn)
+      |> with_redirect_uri(conn)
 
     module = option(conn, :oauth2_module)
     redirect!(conn, apply(module, :authorize_url!, [opts]))
@@ -221,5 +213,19 @@ defmodule Ueberauth.Strategy.Gitlab do
 
   defp option(conn, key) do
     Keyword.get(options(conn) || [], key, Keyword.get(default_options(), key))
+  end
+
+  defp with_scopes(opts, conn) do
+    scopes = conn.params["scope"] || option(conn, :default_scope)
+
+    opts |> Keyword.put(:scope, scopes)
+  end
+
+  defp with_redirect_uri(opts, conn) do
+    if option(conn, :send_redirect_uri) do
+      opts |> Keyword.put(:redirect_uri, callback_url(conn))
+    else
+      opts
+    end
   end
 end

@@ -38,7 +38,7 @@ defmodule UeberauthGitlab.Mixfile do
   defp deps do
     [
       {:oauth2, "~> 2.0"},
-      {:ueberauth, "~> 0.4"},
+      {:ueberauth, "~> 0.7.0"},
 
       # dev/test only dependencies
       {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
