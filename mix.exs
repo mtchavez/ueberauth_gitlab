@@ -1,7 +1,7 @@
 defmodule UeberauthGitlab.Mixfile do
   use Mix.Project
 
-  @version "0.3.1"
+  @version "0.4.0"
   @source_url "https://github.com/mtchavez/ueberauth_gitlab"
 
   def project do

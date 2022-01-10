@@ -13,69 +13,69 @@
 
 1. Add `:ueberauth_gitlab_strategy` to your list of dependencies in `mix.exs`:
 
-    ```elixir
-    def deps do
-      [{:ueberauth_gitlab_strategy, "~> 0.2"}]
-    end
-    ```
+   ```elixir
+   def deps do
+     [{:ueberauth_gitlab_strategy, "~> 0.4"}]
+   end
+   ```
 
 1. Add the strategy to your applications:
 
-    ```elixir
-    def application do
-      [applications: [:ueberauth_gitlab_strategy]]
-    end
-    ```
+   ```elixir
+   def application do
+     [applications: [:ueberauth_gitlab_strategy]]
+   end
+   ```
 
 1. Add Gitlab to your Überauth configuration:
 
-    ```elixir
-    config :ueberauth, Ueberauth,
-      providers: [
-        identity: { Ueberauth.Strategy.Identity, [
-            callback_methods: ["POST"],
-            uid_field: :email,
-            nickname_field: :username,
-          ] },
-        gitlab: {Ueberauth.Strategy.Gitlab, [default_scope: "read_user"]},
-      ]
-    ```
+   ```elixir
+   config :ueberauth, Ueberauth,
+     providers: [
+       identity: { Ueberauth.Strategy.Identity, [
+           callback_methods: ["POST"],
+           uid_field: :email,
+           nickname_field: :username,
+         ] },
+       gitlab: {Ueberauth.Strategy.Gitlab, [default_scope: "read_user"]},
+     ]
+   ```
 
 1. Update your provider configuration:
 
-    ```elixir
-    config :ueberauth, Ueberauth.Strategy.Gitlab.OAuth,
-      client_id: System.get_env("GITLAB_CLIENT_ID"),
-      client_secret: System.get_env("GITLAB_CLIENT_SECRET"),
-      redirect_uri: System.get_env("GITLAB_REDIRECT_URI")
-    ```
+   ```elixir
+   config :ueberauth, Ueberauth.Strategy.Gitlab.OAuth,
+     client_id: System.get_env("GITLAB_CLIENT_ID"),
+     client_secret: System.get_env("GITLAB_CLIENT_SECRET"),
+     redirect_uri: System.get_env("GITLAB_REDIRECT_URI")
+   ```
 
 1. Include the Überauth plug in your controller:
 
-    ```elixir
-    defmodule MyApp.AuthController do
-      use MyApp.Web, :controller
+   ```elixir
+   defmodule MyApp.AuthController do
+     use MyApp.Web, :controller
 
-      pipeline :browser do
-        plug Ueberauth
-        ...
-       end
-    end
-    ```
+     pipeline :browser do
+       plug Ueberauth
+       ...
+      end
+   end
+   ```
 
 1. Create the request and callback routes if you haven't already:
 
-    ```elixir
-    scope "/auth", MyApp do
-      pipe_through :browser
+   ```elixir
+   scope "/auth", MyApp do
+     pipe_through :browser
 
-      get "/:provider", AuthController, :request
-      get "/:provider/callback", AuthController, :callback
-    end
-    ```
+     get "/:provider", AuthController, :request
+     get "/:provider/callback", AuthController, :callback
+   end
+   ```
 
 1. Your controller needs to implement callbacks to deal with `Ueberauth.Auth`
-and `Ueberauth.Failure` responses.
+   and `Ueberauth.Failure` responses.
 
 For an example implementation see the [Überauth Example][example-app] application
 on how to integrate other strategies. Adding Gitlab should be similar to Github.

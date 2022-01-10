@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.4.0 - 2022-01-10
+
+- Update `ueberauth ~> 0.7.0"`
+- Update `state_param` handling for ueberauth `>=0.7` [https://github.com/mtchavez/ueberauth_gitlab/pull/113]
+
 ## v0.3.1 - 2021-12-15
 
 - Remove dev/test packages from runtime
